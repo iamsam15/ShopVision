@@ -70,7 +70,7 @@ export function AbandonedCartPieChart({ data }: { data: AbandonedCartData[] }) {
             }: {
               name?: string | number;
               percent?: number;
-            }) => `${name} ${(percent ?? 0 * 100).toFixed(0)}%`}
+            }) => `${name} ${((percent ?? 0) * 100).toFixed(0)}%`}
           >
             {data.map((_entry, index) => (
               <Cell
