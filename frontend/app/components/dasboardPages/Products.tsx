@@ -9,7 +9,6 @@ import { TopProductsChart } from "../dashboradComponents/TopProductsChart";
 export default function ProductsPage() {
   const { selectedTenant } = useDashboard();
   const [searchTerm, setSearchTerm] = useState("");
-  console.log(selectedTenant);
   const products = useMemo(
     () => (selectedTenant ? selectedTenant.products : []),
     [selectedTenant]

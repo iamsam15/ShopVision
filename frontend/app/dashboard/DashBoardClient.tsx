@@ -20,6 +20,12 @@ type View =
   | "insights"
   | "settings";
 
+const LoadingSpinner = () => (
+  <div className="flex items-center justify-center h-screen bg-[#0C0C0C] text-white">
+    Loading your dashboard...
+  </div>
+);
+
 export function DashboardClient({
   initialData,
   user,
@@ -50,6 +56,7 @@ export function DashboardClient({
     url: string;
   } | null>(null);
   const [isLinking, setIsLinking] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
 
   useEffect(() => {
@@ -62,7 +69,10 @@ export function DashboardClient({
 
   const fetchAndSetTenants = async () => {
     try {
-      const data = await clientApiService.getData().then((res) => res.json());
+      const res = await clientApiService.getData();
+      if (!res.ok) throw new Error("Failed to fetch data.");
+      const data = await res.json();
+
       setAllTenants(data);
       if (
         data.length > 0 &&
@@ -73,10 +83,24 @@ export function DashboardClient({
         setSelectedTenantId(null);
       }
       return data;
-    } catch (error) {
-      console.error("Failed to fetch tenants", error);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        toast.error(error.message || "Could not fetch tenants.");
+      } else {
+        toast.error("Could not fetch tenants.");
+      }
     }
   };
+
+  useEffect(() => {
+    const initialLoad = async () => {
+      if (!initialData || initialData.length === 0) {
+        await fetchAndSetTenants();
+      }
+      setIsLoading(false);
+    };
+    initialLoad();
+  }, [initialData]);
 
   useEffect(() => {
     const checkForNewTenant = () => {
@@ -145,11 +169,16 @@ export function DashboardClient({
     newlyInstalledTenant,
     activeView,
     setActiveView,
-
     user,
     fetchTenants: fetchAndSetTenants,
     setSelectedTenant: setSelectedTenantId,
+    isLoading,
   };
+
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
+
   return (
     <DashboardContext.Provider value={contextValue}>
       {children}

@@ -7,7 +7,6 @@ import { Customer, Order } from "../../../lib/clientApiService";
 
 export default function DashboardOverviewPage() {
   const { selectedTenant } = useDashboard();
-  console.log(selectedTenant);
   if (!selectedTenant) {
     return (
       <div className="flex items-center justify-center h-full">
