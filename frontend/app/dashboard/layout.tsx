@@ -3,13 +3,19 @@ import { serverApiService } from "../../lib/serverApiService";
 import { DashboardClient } from "./DashBoardClient";
 import { Tenant } from "../../lib/clientApiService";
 import { NewStoreNotification } from "../components/NewStoreNotification";
+import { cookies } from "next/headers";
 
-async function getInitialData(): Promise<Tenant[]> {
+interface ServerData {
+  tenants: Tenant[];
+  user: { id: string; email: string } | null;
+}
+
+async function getInitialData(): Promise<ServerData> {
   try {
     return await serverApiService.getDataOnServer();
   } catch (error) {
     console.error("Failed to fetch initial data:", error);
-    return [];
+    return { tenants: [], user: null };
   }
 }
 
@@ -18,11 +24,11 @@ export default async function DashboardLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const initialData = await getInitialData();
+  const { tenants, user } = await getInitialData();
 
   return (
     <div className="min-h-screen flex flex-col bg-[#0c0c0c]">
-      <DashboardClient initialData={initialData} user={null}>
+      <DashboardClient initialData={tenants} user={user}>
         <Header />
         <div className="flex-1 flex flex-col overflow-hidden">
           <NewStoreNotification />

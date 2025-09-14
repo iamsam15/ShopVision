@@ -37,6 +37,11 @@ export interface Tenant {
   checkouts: Checkout[];
 }
 
+export interface User {
+  id: string;
+  email: string;
+}
+
 const API_HOST = process.env.NEXT_PUBLIC_API_BASE_URL;
 const API_BASE_URL = `${API_HOST}/api`;
 

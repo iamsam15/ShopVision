@@ -24,7 +24,10 @@ const getDataForUser = async (req, res) => {
   try {
     const userWithData = await prisma.user.findUnique({
       where: { id: userId },
-      include: {
+      select: {
+        // Use 'select' for better performance
+        id: true,
+        email: true,
         tenants: {
           include: {
             products: {
@@ -46,8 +49,13 @@ const getDataForUser = async (req, res) => {
 
     if (!userWithData)
       return res.status(404).json({ error: "User not found." });
-
-    res.status(200).json(userWithData.tenants);
+    res.status(200).json({
+      user: {
+        id: userWithData.id,
+        email: userWithData.email,
+      },
+      tenants: userWithData.tenants,
+    });
   } catch (error) {
     console.error("Get data for user error:", error);
     res.status(500).json({ error: "Could not fetch data." });
