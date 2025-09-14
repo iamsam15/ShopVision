@@ -8,7 +8,7 @@ import { AlertTriangle, X } from "lucide-react";
 export default function SettingsPage() {
   const { selectedTenant, setSelectedTenant, fetchTenants, user } =
     useDashboard();
-
+  console.log(user);
   const [isDeleting, setIsDeleting] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
@@ -95,7 +95,9 @@ export default function SettingsPage() {
           <h1 className="text-4xl font-bold text-white text-center mb-8">
             Settings
           </h1>
-          <h2 className="text-2xl font-bold text-white mb-4">{user?.email}</h2>
+          <h2 className="text-2xl font-bold text-white mb-4">
+            User Email: {user?.email}
+          </h2>
           <div
             className="backdrop-blur-sm border rounded-2xl p-6 sm:p-8 shadow-2xl"
             style={{
