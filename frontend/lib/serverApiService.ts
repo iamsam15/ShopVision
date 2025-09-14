@@ -1,8 +1,7 @@
 import { cookies } from "next/headers";
 import { Tenant } from "./clientApiService";
 
-const API_HOST =
-  process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:3000";
+const API_HOST = process.env.NEXT_PUBLIC_API_BASE_URL;
 const API_BASE_URL = `${API_HOST}/api`;
 
 const serverApiFetch = async (url: string, options: RequestInit = {}) => {

@@ -6,7 +6,8 @@ import { useState } from "react";
 import { AlertTriangle, X } from "lucide-react";
 
 export default function SettingsPage() {
-  const { selectedTenant, setSelectedTenant, fetchTenants } = useDashboard();
+  const { selectedTenant, setSelectedTenant, fetchTenants, user } =
+    useDashboard();
 
   const [isDeleting, setIsDeleting] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -78,7 +79,6 @@ export default function SettingsPage() {
       className="min-h-screen w-full p-4 sm:p-6 lg:p-8 relative"
       style={{ backgroundColor: "#0C0C0C" }}
     >
-      {/* Background blur effects */}
       <div className="absolute inset-0 overflow-hidden -z-10">
         <div
           className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-96 rounded-full blur-3xl opacity-20"
@@ -95,7 +95,7 @@ export default function SettingsPage() {
           <h1 className="text-4xl font-bold text-white text-center mb-8">
             Settings
           </h1>
-
+          <h2 className="text-2xl font-bold text-white mb-4">{user?.email}</h2>
           <div
             className="backdrop-blur-sm border rounded-2xl p-6 sm:p-8 shadow-2xl"
             style={{
