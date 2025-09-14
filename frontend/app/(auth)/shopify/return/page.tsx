@@ -1,31 +1,34 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
 
-export default function ShopifyReturnPage() {
-  const searchParams = useSearchParams();
+interface ShopifyReturnPageProps {
+  searchParams: {
+    newTenantId?: string;
+    shop?: string;
+  };
+}
+
+export default function ShopifyReturnPage({
+  searchParams,
+}: ShopifyReturnPageProps) {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  useEffect(() => {
-    const newTenantId = searchParams.get("newTenantId");
-    const shopUrl = searchParams.get("shop");
+  const { newTenantId, shop } = searchParams;
 
-    if (newTenantId && shopUrl) {
+  useEffect(() => {
+    if (newTenantId && shop) {
       localStorage.setItem(
         "newlyInstalledTenant",
-        JSON.stringify({
-          id: newTenantId,
-          url: shopUrl,
-        })
+        JSON.stringify({ id: newTenantId, url: shop })
       );
       window.close();
     }
-  }, [searchParams]);
+  }, [newTenantId, shop]);
 
   if (!mounted) return null;
 

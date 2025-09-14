@@ -1,4 +1,3 @@
-// @ts-nocheck
 "use client";
 
 import {
@@ -11,10 +10,7 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
-import type {
-  NameType,
-  ValueType,
-} from "recharts/types/component/DefaultTooltipContent";
+import type { ValueType } from "recharts/types/component/DefaultTooltipContent";
 
 interface ChartData {
   date: string;
@@ -50,7 +46,7 @@ export function RevenueChart({ data }: { data: ChartData[] }) {
             stroke="rgba(155, 57, 34, 0.5)"
           />
           <Tooltip
-            formatter={(value: ValueType, _name: NameType) => {
+            formatter={(value: ValueType) => {
               const numeric = typeof value === "number" ? value : Number(value);
               const display = Number.isFinite(numeric)
                 ? `$${numeric.toFixed(2)}`

@@ -22,7 +22,7 @@ export default async function DashboardLayout({
 
   return (
     <div className="min-h-screen flex flex-col bg-[#0c0c0c]">
-      <DashboardClient initialData={initialData}>
+      <DashboardClient initialData={initialData} user={null}>
         <Header />
         <div className="flex-1 flex flex-col overflow-hidden">
           <NewStoreNotification />

@@ -1,4 +1,3 @@
-// @ts-nocheck
 "use client";
 
 import React from "react";
@@ -11,7 +10,19 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-const CustomTooltip = ({ active, payload }) => {
+interface AbandonedCartData {
+  label: string;
+  value: number;
+}
+
+interface CustomTooltipProps {
+  active?: boolean;
+  payload?: Array<{
+    payload: AbandonedCartData;
+  }>;
+}
+
+const CustomTooltip = ({ active, payload }: CustomTooltipProps) => {
   if (active && payload && payload.length) {
     const data = payload[0].payload;
     return (
@@ -53,9 +64,13 @@ export function AbandonedCartPieChart({ data }: { data: AbandonedCartData[] }) {
             cx="50%"
             cy="50%"
             outerRadius={120}
-            label={({ label, percent }) =>
-              `${label} ${(percent * 100).toFixed(0)}%`
-            }
+            label={({
+              name,
+              percent,
+            }: {
+              name?: string | number;
+              percent?: number;
+            }) => `${name} ${(percent ?? 0 * 100).toFixed(0)}%`}
           >
             {data.map((_entry, index) => (
               <Cell
