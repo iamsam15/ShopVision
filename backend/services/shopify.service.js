@@ -161,7 +161,7 @@ async function syncOrders(tenantId, storeUrl, accessToken) {
 }
 
 const registerWebhooks = async (storeUrl, accessToken, tenantId) => {
-  const webhookEndpoint = `${process.env.APP_URL}/api/webhooks/shopify/${tenantId}`;
+  const webhookEndpoint = `${process.env.HOST}/api/webhooks/shopify/${tenantId}`;
 
   const webhookTopics = [
     "products/create",
