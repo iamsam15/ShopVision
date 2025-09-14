@@ -71,18 +71,26 @@ export function DashboardClient({
     try {
       const res = await clientApiService.getData();
       if (!res.ok) throw new Error("Failed to fetch data.");
-      const data = await res.json();
 
-      setAllTenants(data);
-      if (
-        data.length > 0 &&
-        !data.some((t: Tenant) => t.id === selectedTenantId)
-      ) {
-        setSelectedTenantId(data[0].id);
-      } else if (data.length === 0) {
+      const { tenants, user } = await res.json();
+
+      if (Array.isArray(tenants)) {
+        setAllTenants(tenants);
+
+        if (
+          tenants.length > 0 &&
+          !tenants.some((t: Tenant) => t.id === selectedTenantId)
+        ) {
+          setSelectedTenantId(tenants[0].id);
+        } else if (tenants.length === 0) {
+          setSelectedTenantId(null);
+        }
+      } else {
+        setAllTenants([]);
         setSelectedTenantId(null);
       }
-      return data;
+
+      return tenants;
     } catch (error: unknown) {
       if (error instanceof Error) {
         toast.error(error.message || "Could not fetch tenants.");
