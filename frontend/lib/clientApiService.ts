@@ -55,37 +55,44 @@ export const clientApiService = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
+      credentials: "include",
     }),
   register: (email: string, password: string) =>
     clientApiFetch(`${API_BASE_URL}/auth/register`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
+      credentials: "include",
     }),
   logout: () =>
     clientApiFetch(`${API_BASE_URL}/auth/logout`, {
       method: "POST",
+      credentials: "include",
     }),
   changePassword: (currentPassword: string, newPassword: string) =>
     clientApiFetch(`${API_BASE_URL}/auth/change-password`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ currentPassword, newPassword }),
+      credentials: "include",
     }),
   linkTenant: (tenantId: string) =>
     clientApiFetch(`${API_BASE_URL}/tenants/link`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ tenantId }),
+      credentials: "include",
     }),
   syncTenant: (tenantId: string) =>
     clientApiFetch(`${API_BASE_URL}/tenants/${tenantId}/sync`, {
       method: "POST",
+      credentials: "include",
     }),
   getData: () => clientApiFetch(`${API_BASE_URL}/tenants/me/data`),
   deleteTenant: (tenantId: string) =>
     clientApiFetch(`${API_BASE_URL}/tenants/${tenantId}`, {
       method: "DELETE",
+      credentials: "include",
     }),
   getCheckoutStats: (tenantId: string) =>
     clientApiFetch(`${API_BASE_URL}/tenants/${tenantId}/checkout-stats`),
