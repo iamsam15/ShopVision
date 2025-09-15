@@ -17,6 +17,8 @@ A comprehensive multi-tenant analytics dashboard for Shopify stores, built with 
 
 ## 🏗️ High-Level Architecture
 
+![Architecture Diagram](images/architecture.png)
+
 ```
 ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
 │   Shopify       │    │   Frontend      │    │   Backend       │
@@ -64,6 +66,8 @@ A comprehensive multi-tenant analytics dashboard for Shopify stores, built with 
 - **Package Manager**: npm
 
 ## 📊 Data Models
+
+![Database Schema](images/database.png)
 
 ### Core Entities
 
