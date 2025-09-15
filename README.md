@@ -1,6 +1,28 @@
-# XENO - Multi-Tenant Shopify Analytics Dashboard
+# Xeno FDE Internship Assignment – 2025
 
-A comprehensive multi-tenant analytics dashboard for Shopify stores, built with Next.js 15, Express.js, and PostgreSQL. This application provides real-time insights into customer behavior, order analytics, product performance, and checkout abandonment tracking across multiple Shopify stores.
+Multi-tenant Shopify Data Ingestion & Insights Service
+
+This project implements the assignment brief for Xeno's Forward Deployed Engineer (FDE) Internship 2025. It simulates how Xeno onboards enterprise retailers by integrating a Shopify store, ingesting core entities, and providing an insights dashboard with multi-tenant isolation.
+
+## 🧭 Assignment Overview
+
+- **Goal**: Build a multi-tenant Shopify Data Ingestion & Insights Service
+- **Tenancy**: Each Shopify store is a tenant with complete data isolation
+- **Ingestion**: Customers, Orders, Products, and Checkouts (abandoned/started)
+- **Insights**: KPIs and charts for customers, orders, revenue, top customers
+- **Auth**: Email/password auth to access dashboard and manage store onboarding
+
+## ✅ Scope of Work (per brief)
+
+- [x] Shopify development store support with OAuth install flow
+- [x] Data ingestion: Customers, Orders, Products, Checkouts (bonus events)
+- [x] Webhooks + manual sync API to keep data up-to-date
+- [x] Multi-tenant isolation in DB schema using `tenantId`
+- [x] UI with email authentication and dashboard visualizations
+- [x] ORM: Prisma on PostgreSQL
+- [x] Documentation with architecture, APIs, models, and production steps
+
+See “Getting Started” for local setup and “Deployment” for hosting options.
 
 ## 🚀 Features
 
@@ -68,6 +90,78 @@ A comprehensive multi-tenant analytics dashboard for Shopify stores, built with 
 ## 📊 Data Models
 
 ![Database Schema](images/database.png)
+
+### Mermaid ER Diagram
+
+```mermaid
+erDiagram
+    Tenant ||--o{ Customer : "has"
+    Tenant ||--o{ Product : "has"
+    Tenant ||--o{ Order : "has"
+    Tenant ||--o{ Checkout : "has"
+    Tenant }o--|| User : "manages"
+
+    Customer ||--o{ Order : "places"
+    Order ||--|{ LineItem : "contains"
+    Product ||--o{ LineItem : "included_in"
+
+    Tenant {
+        string id PK "CUID"
+        string storeUrl UNIQUE
+        string accessToken
+        datetime createdAt
+    }
+    User {
+        string id PK "CUID"
+        string email UNIQUE
+        string password
+        datetime createdAt
+    }
+    Customer {
+        bigint id PK "Shopify ID"
+        string tenantId FK
+        string firstName "Nullable"
+        string lastName "Nullable"
+        string email "Nullable"
+        string phone "Nullable"
+        datetime createdAt
+        int orderCount
+    }
+    Product {
+        bigint id PK "Shopify ID"
+        string tenantId FK
+        string title
+        string vendor "Nullable"
+        string productType "Nullable"
+        datetime createdAt
+    }
+    Order {
+        bigint id PK "Shopify ID"
+        string tenantId FK
+        float totalPrice
+        string currency
+        string financialStatus "Nullable"
+        datetime createdAt
+        bigint customerId FK "Nullable"
+    }
+    LineItem {
+        bigint id PK "Shopify ID"
+        string tenantId FK
+        bigint orderId FK
+        bigint productId FK
+        string name
+        string title
+        string vendor "Nullable"
+        int quantity
+    }
+    Checkout {
+        bigint id PK "Shopify ID"
+        string tenantId FK
+        string email "Nullable"
+        boolean isCompleted
+        datetime createdAt
+    }
+```
 
 ### Core Entities
 
@@ -720,6 +814,36 @@ async function syncProducts(tenantId, storeUrl, accessToken) {
    ```
 
 3. Access the application at `http://localhost:3001`
+
+## 🚢 Deployment
+
+- Backend: Deploy on Render/Railway/Heroku. Configure env vars from `.env`.
+- Frontend: Deploy on Vercel. Set `NEXT_PUBLIC_API_BASE_URL` to your backend URL.
+- Database: Managed PostgreSQL (Render/Railway/Supabase). Migrate with `prisma migrate deploy`.
+
+## 🎥 Demo Video
+
+- Record a 5–7 min walkthrough covering:
+  - Tenant onboarding (Shopify install flow)
+  - Data ingestion via webhooks and manual sync
+  - Dashboard KPIs and charts
+  - Multi-tenant isolation and DB schema
+
+Add your video link here: <Demo URL>
+
+## ⚠️ Known Limitations
+
+- Sandbox-only Shopify store. Limited to test data.
+- Simplified auth and session handling for demo purposes.
+- Limited error-retry and backoff for failed webhooks.
+- No background queue; ingestion runs inline/HTTP-triggered.
+
+## 📤 Submission
+
+- Public GitHub repo with this README.
+- Deployed backend and frontend URLs.
+- Demo video link added above.
+- Submit by Sep 15, 2025 at: [Submission Link]
 
 ## 🔧 Development
 
