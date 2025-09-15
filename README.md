@@ -829,13 +829,13 @@ async function syncProducts(tenantId, storeUrl, accessToken) {
 
 ## 🎥 Demo Video
 
-- Record a 5–7 min walkthrough covering:
+- Recorded a 5–7 min walkthrough covering:
   - Tenant onboarding (Shopify install flow)
   - Data ingestion via webhooks and manual sync
   - Dashboard KPIs and charts
   - Multi-tenant isolation and DB schema
 
-Add your video link here: <Demo URL>
+video link: <Demo https://drive.google.com/file/d/1l1nzLU9EE91YtiTAnFSQSUEz23NyzcNV/view?usp=sharing>
 
 ## ⚠️ Known Limitations
 
