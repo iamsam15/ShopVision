@@ -62,6 +62,12 @@ const handleShopifyWebhook = async (req, res) => {
 
       case "customers/create":
         await prisma.customer.upsert({
+          where: {
+            id_tenantId: {
+              id: BigInt(data.id),
+              tenantId,
+            },
+          },
           update: {
             firstName: data.first_name,
             lastName: data.last_name,
@@ -69,14 +75,14 @@ const handleShopifyWebhook = async (req, res) => {
             phone: data.phone,
           },
           create: {
-            id: data.id,
-            tenantId: tenantId,
+            id: BigInt(data.id),
+            tenantId,
             firstName: data.first_name,
             lastName: data.last_name,
             email: data.email,
             phone: data.phone,
             createdAt: new Date(data.created_at),
-            orderCount: 0,
+            orderCount: data.orders_count,
           },
         });
         break;
