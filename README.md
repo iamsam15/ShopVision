@@ -106,58 +106,64 @@ erDiagram
     Product ||--o{ LineItem : "included_in"
 
     Tenant {
-        string id PK "CUID"
+        string id PK
         string storeUrl UNIQUE
         string accessToken
         datetime createdAt
     }
+
     User {
-        string id PK "CUID"
+        string id PK
         string email UNIQUE
         string password
         datetime createdAt
     }
+
     Customer {
-        bigint id PK "Shopify ID"
+        bigint id PK
         string tenantId FK
-        string firstName "Nullable"
-        string lastName "Nullable"
-        string email "Nullable"
-        string phone "Nullable"
+        string firstName
+        string lastName
+        string email
+        string phone
         datetime createdAt
         int orderCount
     }
+
     Product {
-        bigint id PK "Shopify ID"
+        bigint id PK
         string tenantId FK
         string title
-        string vendor "Nullable"
-        string productType "Nullable"
+        string vendor
+        string productType
         datetime createdAt
     }
+
     Order {
-        bigint id PK "Shopify ID"
+        bigint id PK
         string tenantId FK
         float totalPrice
         string currency
-        string financialStatus "Nullable"
+        string financialStatus
         datetime createdAt
-        bigint customerId FK "Nullable"
+        bigint customerId FK
     }
+
     LineItem {
-        bigint id PK "Shopify ID"
+        bigint id PK
         string tenantId FK
         bigint orderId FK
         bigint productId FK
         string name
         string title
-        string vendor "Nullable"
+        string vendor
         int quantity
     }
+
     Checkout {
-        bigint id PK "Shopify ID"
+        bigint id PK
         string tenantId FK
-        string email "Nullable"
+        string email
         boolean isCompleted
         datetime createdAt
     }
