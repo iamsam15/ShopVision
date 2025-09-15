@@ -835,7 +835,7 @@ async function syncProducts(tenantId, storeUrl, accessToken) {
   - Dashboard KPIs and charts
   - Multi-tenant isolation and DB schema
 
-video link: <Demo https://drive.google.com/file/d/1l1nzLU9EE91YtiTAnFSQSUEz23NyzcNV/view?usp=sharing>
+video link: <https://drive.google.com/file/d/1l1nzLU9EE91YtiTAnFSQSUEz23NyzcNV/view?usp=sharing>
 
 ## ⚠️ Known Limitations
 
