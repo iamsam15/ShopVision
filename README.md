@@ -95,26 +95,26 @@ See “Getting Started” for local setup and “Deployment” for hosting optio
 
 ```mermaid
 erDiagram
-    Tenant ||--o{ Customer : "has"
-    Tenant ||--o{ Product : "has"
-    Tenant ||--o{ Order : "has"
-    Tenant ||--o{ Checkout : "has"
-    Tenant }o--|| User : "manages"
+    Tenant ||--o{ Customer : has
+    Tenant ||--o{ Product : has
+    Tenant ||--o{ Order : has
+    Tenant ||--o{ Checkout : has
+    Tenant }o--|| User : manages
 
-    Customer ||--o{ Order : "places"
-    Order ||--|{ LineItem : "contains"
-    Product ||--o{ LineItem : "included_in"
+    Customer ||--o{ Order : places
+    Order ||--|{ LineItem : contains
+    Product ||--o{ LineItem : included_in
 
     Tenant {
         string id PK
-        string storeUrl UNIQUE
+        string storeUrl
         string accessToken
         datetime createdAt
     }
 
     User {
         string id PK
-        string email UNIQUE
+        string email
         string password
         datetime createdAt
     }
